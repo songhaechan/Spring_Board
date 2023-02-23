@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/articles")
-@RequiredArgsConstructor
+@RequestMapping(value = "/articles") // Request mapping
+@RequiredArgsConstructor // final constructor
 public class ArticleController {
 
     private final ArticleService articleService;
@@ -21,6 +21,7 @@ public class ArticleController {
     public Article getArticle(@PathVariable Long id) {
         return articleService.getArticle(id);
     }
+    //@PathVariable -> URI 에 변수 삽입
 
     @GetMapping("/all-types")
     public List<Article> getArticleList(){
