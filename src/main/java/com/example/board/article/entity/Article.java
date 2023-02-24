@@ -1,14 +1,20 @@
-package com.example.board.article;
+package com.example.board.article.entity;
 
+import com.example.board.article.exception.LikeCountMinusException;
+import com.example.board.global.BaseTime;
+import com.example.board.global.SoftDelete;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+@SoftDelete
 @Getter // Get 메서드 자동생성
 @Entity // DB에 Article 클래스 연결
-@NoArgsConstructor  // 매개변수 없는 생성자
-public class Article {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)  // 매개변수 없는 생성자
+public class Article extends BaseTime {
     @Id @GeneratedValue
     private Long id;
     private String title;
@@ -33,5 +39,9 @@ public class Article {
             throw new LikeCountMinusException();
         }
         return --likeCount;
+    }
+
+    public void delete(){
+        deletedEntity();
     }
 } // Article
